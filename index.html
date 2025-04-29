@@ -1,1 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVP Cursor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            height: 100vh;
+            padding-top: 20px;
+        }
+        
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .sidebar li {
+            padding: 15px 20px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .sidebar li:hover {
+            background-color: #444;
+            cursor: pointer;
+        }
+        
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .content h1 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="colaboradores.html">Lista de colaboradores</a></li>
+            <li><a href="productoras.html">Informe de productoras</a></li>
+            <li><a href="configuracion.html">Configuración</a></li>
+        </ul>
+    </div>
+    
+    <div class="content">
+        <h1>Bienvenido</h1>
+        <p>Selecciona una opción de la barra lateral para navegar.</p>
+    </div>
+</body>
+</html>
 
