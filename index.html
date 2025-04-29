@@ -3,20 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MVP Cursor</title>
+    <title>Mercado Libre - Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background-color: #FFE600; /* Amarillo Mercado Libre */
+            color: #333;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        
+        .main-container {
+            display: flex;
+            height: calc(100vh - 50px);
         }
         
         .sidebar {
             width: 250px;
-            background-color: #333;
+            background-color: #2D3277; /* Azul */
             color: white;
-            height: 100vh;
+            height: 100%;
             padding-top: 20px;
         }
         
@@ -27,45 +44,105 @@
         
         .sidebar li {
             padding: 15px 20px;
-            border-bottom: 1px solid #444;
+            border-bottom: 1px solid #3D4393;
+            transition: background-color 0.3s;
         }
         
         .sidebar li:hover {
-            background-color: #444;
+            background-color: #3D4393;
             cursor: pointer;
         }
         
         .sidebar a {
             color: white;
             text-decoration: none;
-            display: block;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
         }
         
         .content {
             flex: 1;
             padding: 20px;
+            background-color: white;
+            overflow-y: auto;
         }
         
         .content h1 {
             margin-top: 0;
+            color: #333;
+        }
+        
+        .section {
+            display: none;
+            padding: 20px;
+        }
+        
+        .section.active {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="colaboradores.html">Lista de colaboradores</a></li>
-            <li><a href="productoras.html">Informe de productoras</a></li>
-            <li><a href="configuracion.html">Configuración</a></li>
-        </ul>
+    <div class="header">
+        Mercado Libre
     </div>
     
-    <div class="content">
-        <h1>Bienvenido</h1>
-        <p>Selecciona una opción de la barra lateral para navegar.</p>
+    <div class="main-container">
+        <div class="sidebar">
+            <ul>
+                <li><a href="#inicio" onclick="showSection('inicio')"><i class="fas fa-home"></i>Inicio</a></li>
+                <li><a href="#dashboard" onclick="showSection('dashboard')"><i class="fas fa-chart-pie"></i>Dashboard</a></li>
+                <li><a href="#colaboradores" onclick="showSection('colaboradores')"><i class="fas fa-users"></i>Lista de colaboradores</a></li>
+                <li><a href="#productoras" onclick="showSection('productoras')"><i class="fas fa-industry"></i>Informe de productoras</a></li>
+                <li><a href="#configuracion" onclick="showSection('configuracion')"><i class="fas fa-cog"></i>Configuración</a></li>
+            </ul>
+        </div>
+        
+        <div class="content">
+            <div id="inicio" class="section active">
+                <h1>Inicio</h1>
+                <p>Bienvenido al portal de Mercado Libre. Seleccione una opción del menú lateral para comenzar.</p>
+            </div>
+            
+            <div id="dashboard" class="section">
+                <h1>Dashboard</h1>
+                <p>Aquí encontrará los gráficos y estadísticas principales.</p>
+            </div>
+            
+            <div id="colaboradores" class="section">
+                <h1>Lista de colaboradores</h1>
+                <p>Visualice y gestione la información de los colaboradores.</p>
+            </div>
+            
+            <div id="productoras" class="section">
+                <h1>Informe de productoras</h1>
+                <p>Consulte los informes detallados de las productoras asociadas.</p>
+            </div>
+            
+            <div id="configuracion" class="section">
+                <h1>Configuración</h1>
+                <p>Ajuste las preferencias y configuraciones de su cuenta.</p>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+        }
+    </script>
 </body>
 </html>
 
