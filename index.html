@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Colaboradores – Portal</title>
+  <title>Gestión de Colaboradores - TL View</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <header class="header">
-    Admin Colaboradores
+    Gestión de Colaboradores
     <button class="menu-toggle" aria-label="Toggle menu">
       <i class="fas fa-bars"></i>
     </button>
@@ -29,29 +29,137 @@
 
     <main class="content">
       <section id="inicio" class="section active">
-        <h1>Inicio</h1>
-        <p>Bienvenido. Seleccione una opción del menú lateral para comenzar.</p>
+        <h1>Panel de Control TL</h1>
+        <div class="action-buttons">
+          <button class="action-btn alta" data-action="alta">
+            <i class="fas fa-user-plus"></i>
+            <span>Altas</span>
+          </button>
+          <button class="action-btn baja" data-action="baja">
+            <i class="fas fa-user-minus"></i>
+            <span>Bajas</span>
+          </button>
+          <button class="action-btn licencia" data-action="licencia">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Licencias / Vacaciones</span>
+          </button>
+        </div>
       </section>
 
-      <section id="dashboard" class="section">
-        <h1>Dashboard</h1>
-        <p>Aquí encontrará los gráficos y estadísticas principales.</p>
-      </section>
+      <!-- Modal Container -->
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="modal-title">Formulario</h2>
+            <button class="close-modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <!-- Forms will be dynamically inserted here -->
+          </div>
+        </div>
+      </div>
 
-      <section id="colaboradores" class="section">
-        <h1>Lista de colaboradores</h1>
-        <p>Visualice y gestione la información de los colaboradores.</p>
-      </section>
+      <!-- Form Templates -->
+      <template id="alta-form-template">
+        <form id="alta-form" class="action-form">
+          <div class="form-group">
+            <label for="nombre">Nombre Completo *</label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="dni">DNI *</label>
+            <input type="text" id="dni" name="dni" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Corporativo *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="fecha-inicio">Fecha de Inicio *</label>
+            <input type="date" id="fecha-inicio" name="fecha-inicio" required>
+          </div>
+          <div class="form-group">
+            <label for="rol">Rol *</label>
+            <select id="rol" name="rol" required>
+              <option value="">Seleccione un rol</option>
+              <option value="developer">Developer</option>
+              <option value="qa">QA</option>
+              <option value="pm">Project Manager</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">Registrar Alta</button>
+          </div>
+        </form>
+      </template>
 
-      <section id="productoras" class="section">
-        <h1>Informe de productoras</h1>
-        <p>Consulte los informes detallados de las productoras asociadas.</p>
-      </section>
+      <template id="baja-form-template">
+        <form id="baja-form" class="action-form">
+          <div class="form-group">
+            <label for="colaborador">Colaborador *</label>
+            <select id="colaborador" name="colaborador" required>
+              <option value="">Seleccione un colaborador</option>
+              <!-- Will be populated dynamically -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fecha-baja">Fecha de Baja *</label>
+            <input type="date" id="fecha-baja" name="fecha-baja" required>
+          </div>
+          <div class="form-group">
+            <label for="motivo">Motivo de Baja *</label>
+            <select id="motivo" name="motivo" required>
+              <option value="">Seleccione un motivo</option>
+              <option value="renuncia">Renuncia Voluntaria</option>
+              <option value="despido">Despido</option>
+              <option value="fin-contrato">Fin de Contrato</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="comentarios">Comentarios</label>
+            <textarea id="comentarios" name="comentarios" rows="4"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">Registrar Baja</button>
+          </div>
+        </form>
+      </template>
 
-      <section id="configuracion" class="section">
-        <h1>Configuración</h1>
-        <p>Ajuste las preferencias y configuraciones de su cuenta.</p>
-      </section>
+      <template id="licencia-form-template">
+        <form id="licencia-form" class="action-form">
+          <div class="form-group">
+            <label for="colaborador-licencia">Colaborador *</label>
+            <select id="colaborador-licencia" name="colaborador" required>
+              <option value="">Seleccione un colaborador</option>
+              <!-- Will be populated dynamically -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tipo-licencia">Tipo de Licencia *</label>
+            <select id="tipo-licencia" name="tipo-licencia" required>
+              <option value="">Seleccione un tipo</option>
+              <option value="vacaciones">Vacaciones</option>
+              <option value="enfermedad">Enfermedad</option>
+              <option value="personal">Personal</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fecha-inicio-licencia">Fecha de Inicio *</label>
+            <input type="date" id="fecha-inicio-licencia" name="fecha-inicio" required>
+          </div>
+          <div class="form-group">
+            <label for="fecha-fin-licencia">Fecha de Fin *</label>
+            <input type="date" id="fecha-fin-licencia" name="fecha-fin" required>
+          </div>
+          <div class="form-group">
+            <label for="comentarios-licencia">Comentarios</label>
+            <textarea id="comentarios-licencia" name="comentarios" rows="4"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">Registrar Licencia</button>
+          </div>
+        </form>
+      </template>
     </main>
   </div>
 
