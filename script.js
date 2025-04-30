@@ -9,6 +9,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalBody = modal.querySelector('.modal-body');
     const closeModal = modal.querySelector('.close-modal');
     const actionButtons = document.querySelectorAll('.action-btn');
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+  
+    // Theme management
+    const THEME_KEY = 'preferred-theme';
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+  
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      localStorage.setItem(THEME_KEY, theme);
+    }
+  
+    function initTheme() {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme) {
+        setTheme(savedTheme);
+      } else if (prefersDarkScheme.matches) {
+        setTheme('dark');
+      }
+    }
+  
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+  
+    // Initialize theme
+    initTheme();
   
     // Mock data for collaborators (in a real app, this would come from an API)
     const mockCollaborators = [
