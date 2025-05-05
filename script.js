@@ -41,10 +41,174 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Mock data for collaborators (in a real app, this would come from an API)
     const mockCollaborators = [
-      { id: 1, name: 'Juan Pérez', role: 'Developer' },
-      { id: 2, name: 'María García', role: 'QA' },
-      { id: 3, name: 'Carlos López', role: 'Project Manager' }
+      { 
+        id: 1, 
+        name: 'Juan Pérez', 
+        role: 'Developer',
+        startDate: '2023-01-15',
+        status: 'active'
+      },
+      { 
+        id: 2, 
+        name: 'María García', 
+        role: 'QA',
+        startDate: '2023-02-20',
+        status: 'vacation'
+      },
+      { 
+        id: 3, 
+        name: 'Carlos López', 
+        role: 'Project Manager',
+        startDate: '2023-03-10',
+        status: 'active'
+      },
+      { 
+        id: 4, 
+        name: 'Ana Martínez', 
+        role: 'Developer',
+        startDate: '2023-04-05',
+        status: 'license'
+      },
+      { 
+        id: 5, 
+        name: 'Roberto Sánchez', 
+        role: 'QA',
+        startDate: '2023-05-12',
+        status: 'active'
+      }
     ];
+  
+    // Table management
+    const ITEMS_PER_PAGE = 5;
+    let currentPage = 1;
+    let filteredData = [...mockCollaborators];
+    
+    const tableBody = document.getElementById('collaborators-table-body');
+    const searchInput = document.getElementById('search-collaborator');
+    const filterSelect = document.getElementById('filter-status');
+    const prevPageBtn = document.getElementById('prev-page');
+    const nextPageBtn = document.getElementById('next-page');
+    const currentPageSpan = document.getElementById('current-page');
+    const showingCountSpan = document.getElementById('showing-count');
+    const totalCountSpan = document.getElementById('total-count');
+    
+    function renderTable() {
+      const start = (currentPage - 1) * ITEMS_PER_PAGE;
+      const end = start + ITEMS_PER_PAGE;
+      const pageData = filteredData.slice(start, end);
+      
+      tableBody.innerHTML = '';
+      
+      pageData.forEach(collab => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${collab.name}</td>
+          <td>${collab.role}</td>
+          <td>${formatDate(collab.startDate)}</td>
+          <td>
+            <span class="status-badge ${collab.status}">
+              ${getStatusText(collab.status)}
+            </span>
+          </td>
+          <td class="action-buttons-cell">
+            <button class="action-button" title="Ver detalles" onclick="viewDetails(${collab.id})">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="action-button" title="Editar" onclick="editCollaborator(${collab.id})">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-button" title="Eliminar" onclick="deleteCollaborator(${collab.id})">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+      
+      updatePagination();
+    }
+    
+    function updatePagination() {
+      const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+      
+      prevPageBtn.disabled = currentPage === 1;
+      nextPageBtn.disabled = currentPage === totalPages;
+      
+      currentPageSpan.textContent = currentPage;
+      showingCountSpan.textContent = filteredData.length;
+      totalCountSpan.textContent = mockCollaborators.length;
+    }
+    
+    function filterData() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const statusFilter = filterSelect.value;
+      
+      filteredData = mockCollaborators.filter(collab => {
+        const matchesSearch = collab.name.toLowerCase().includes(searchTerm) ||
+                            collab.role.toLowerCase().includes(searchTerm);
+        const matchesStatus = statusFilter === 'all' || collab.status === statusFilter;
+        
+        return matchesSearch && matchesStatus;
+      });
+      
+      currentPage = 1;
+      renderTable();
+    }
+    
+    function formatDate(dateString) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString('es-ES', options);
+    }
+    
+    function getStatusText(status) {
+      switch(status) {
+        case 'active': return 'Activo';
+        case 'vacation': return 'En vacaciones';
+        case 'license': return 'En licencia';
+        default: return status;
+      }
+    }
+    
+    // Table event listeners
+    searchInput.addEventListener('input', filterData);
+    filterSelect.addEventListener('change', filterData);
+    
+    prevPageBtn.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderTable();
+      }
+    });
+    
+    nextPageBtn.addEventListener('click', () => {
+      const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderTable();
+      }
+    });
+    
+    // Mock action handlers
+    window.viewDetails = (id) => {
+      const collab = mockCollaborators.find(c => c.id === id);
+      showNotification(`Ver detalles de ${collab.name}`, 'info');
+    };
+    
+    window.editCollaborator = (id) => {
+      const collab = mockCollaborators.find(c => c.id === id);
+      showNotification(`Editar ${collab.name}`, 'info');
+    };
+    
+    window.deleteCollaborator = (id) => {
+      const collab = mockCollaborators.find(c => c.id === id);
+      if (confirm(`¿Está seguro de eliminar a ${collab.name}?`)) {
+        showNotification(`${collab.name} eliminado`, 'success');
+        // In a real app, this would make an API call
+      }
+    };
+    
+    // Initialize table
+    renderTable();
   
     // Form templates
     const altaFormTemplate = document.getElementById('alta-form-template');
