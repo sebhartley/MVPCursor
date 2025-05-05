@@ -504,7 +504,10 @@
     gap: 8px;
     justify-content: flex-start;
     align-items: center;
-    padding: 12px 20px;
+  }
+  
+  .action-buttons-cell .action-button {
+    margin: auto 0;
   }
   
   .action-button {
