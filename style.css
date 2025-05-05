@@ -457,6 +457,7 @@
     padding: 12px 20px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
   }
   
   .collaborators-table th {
@@ -501,6 +502,9 @@
   .action-buttons-cell {
     display: flex;
     gap: 8px;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
   }
   
   .action-button {
