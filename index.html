@@ -49,6 +49,56 @@
             <span>Licencias / Vacaciones</span>
           </button>
         </div>
+
+        <div class="collaborators-section">
+          <div class="section-header">
+            <h2>Colaboradores Activos</h2>
+            <div class="table-actions">
+              <div class="search-box">
+                <input type="text" id="search-collaborator" placeholder="Buscar colaborador...">
+                <i class="fas fa-search"></i>
+              </div>
+              <select id="filter-status" class="filter-select">
+                <option value="all">Todos los estados</option>
+                <option value="active">Activos</option>
+                <option value="vacation">En vacaciones</option>
+                <option value="license">En licencia</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="table-container">
+            <table class="collaborators-table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Rol</th>
+                  <th>Fecha de Ingreso</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="collaborators-table-body">
+                <!-- Table content will be populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="table-footer">
+            <div class="table-info">
+              Mostrando <span id="showing-count">0</span> de <span id="total-count">0</span> colaboradores
+            </div>
+            <div class="pagination">
+              <button class="pagination-btn" id="prev-page" disabled>
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <span id="current-page">1</span>
+              <button class="pagination-btn" id="next-page">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- Modal Container -->
