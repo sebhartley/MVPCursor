@@ -504,7 +504,7 @@
     gap: 8px;
     justify-content: flex-start;
     align-items: center;
-    height: 100%;
+    padding: 12px 20px;
   }
   
   .action-button {
