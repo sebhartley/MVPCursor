@@ -106,7 +106,138 @@
 
       <section id="configuracion" class="section">
         <h1>Configuración</h1>
-        <p>Ajuste las preferencias y configuraciones de su cuenta.</p>
+        <div class="settings-container">
+          <div class="settings-group">
+            <h2>Preferencias de Visualización</h2>
+            <div class="settings-options">
+              <div class="setting-item">
+                <label class="switch-label">
+                  <span>Mostrar foto de perfil</span>
+                  <div class="switch">
+                    <input type="checkbox" id="show-profile-pic" checked>
+                    <span class="slider"></span>
+                  </div>
+                </label>
+              </div>
+              
+              <div class="setting-item">
+                <label class="switch-label">
+                  <span>Mostrar estado de actividad</span>
+                  <div class="switch">
+                    <input type="checkbox" id="show-activity-status" checked>
+                    <span class="slider"></span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="setting-item">
+                <label class="switch-label">
+                  <span>Mostrar notificaciones</span>
+                  <div class="switch">
+                    <input type="checkbox" id="show-notifications" checked>
+                    <span class="slider"></span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <h2>Preferencias de Tabla</h2>
+            <div class="settings-options">
+              <div class="setting-item">
+                <label>Elementos por página</label>
+                <select id="items-per-page" class="settings-select">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                </select>
+              </div>
+
+              <div class="setting-item">
+                <label>Ordenar por defecto</label>
+                <select id="default-sort" class="settings-select">
+                  <option value="name">Nombre</option>
+                  <option value="date">Fecha de ingreso</option>
+                  <option value="role">Rol</option>
+                  <option value="status">Estado</option>
+                </select>
+              </div>
+
+              <div class="setting-item">
+                <label>Columnas visibles</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="visible-columns" value="name" checked> Nombre
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="visible-columns" value="role" checked> Rol
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="visible-columns" value="date" checked> Fecha de ingreso
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="visible-columns" value="status" checked> Estado
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="visible-columns" value="actions" checked> Acciones
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <h2>Notificaciones</h2>
+            <div class="settings-options">
+              <div class="setting-item">
+                <label class="switch-label">
+                  <span>Notificaciones por email</span>
+                  <div class="switch">
+                    <input type="checkbox" id="email-notifications" checked>
+                    <span class="slider"></span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="setting-item">
+                <label class="switch-label">
+                  <span>Notificaciones de altas</span>
+                  <div class="switch">
+                    <input type="checkbox" id="alta-notifications" checked>
+                    <span class="slider"></span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="setting-item">
+                <label class="switch-label">
+                  <span>Notificaciones de bajas</span>
+                  <div class="switch">
+                    <input type="checkbox" id="baja-notifications" checked>
+                    <span class="slider"></span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="setting-item">
+                <label class="switch-label">
+                  <span>Notificaciones de licencias</span>
+                  <div class="switch">
+                    <input type="checkbox" id="licencia-notifications" checked>
+                    <span class="slider"></span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-actions">
+            <button class="btn-save" id="save-settings">Guardar Cambios</button>
+            <button class="btn-reset" id="reset-settings">Restaurar Valores por Defecto</button>
+          </div>
+        </div>
       </section>
 
       <!-- Modal Container -->

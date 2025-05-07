@@ -426,5 +426,106 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModalHandler();
       }
     });
+  
+    // Settings Management
+    const defaultSettings = {
+      display: {
+        showProfilePic: true,
+        showActivityStatus: true,
+        showNotifications: true
+      },
+      table: {
+        itemsPerPage: 10,
+        defaultSort: 'name',
+        visibleColumns: ['name', 'role', 'date', 'status', 'actions']
+      },
+      notifications: {
+        email: true,
+        alta: true,
+        baja: true,
+        licencia: true
+      }
+    };
+  
+    // Load settings from localStorage or use defaults
+    function loadSettings() {
+      const savedSettings = localStorage.getItem('appSettings');
+      return savedSettings ? JSON.parse(savedSettings) : defaultSettings;
+    }
+  
+    // Save settings to localStorage
+    function saveSettings(settings) {
+      localStorage.setItem('appSettings', JSON.stringify(settings));
+    }
+  
+    // Apply settings to the UI
+    function applySettings(settings) {
+      // Display settings
+      document.getElementById('show-profile-pic').checked = settings.display.showProfilePic;
+      document.getElementById('show-activity-status').checked = settings.display.showActivityStatus;
+      document.getElementById('show-notifications').checked = settings.display.showNotifications;
+  
+      // Table settings
+      document.getElementById('items-per-page').value = settings.table.itemsPerPage;
+      document.getElementById('default-sort').value = settings.table.defaultSort;
+  
+      // Visible columns
+      const columnCheckboxes = document.querySelectorAll('input[name="visible-columns"]');
+      columnCheckboxes.forEach(checkbox => {
+        checkbox.checked = settings.table.visibleColumns.includes(checkbox.value);
+      });
+  
+      // Notification settings
+      document.getElementById('email-notifications').checked = settings.notifications.email;
+      document.getElementById('alta-notifications').checked = settings.notifications.alta;
+      document.getElementById('baja-notifications').checked = settings.notifications.baja;
+      document.getElementById('licencia-notifications').checked = settings.notifications.licencia;
+    }
+  
+    // Get current settings from UI
+    function getCurrentSettings() {
+      const settings = {
+        display: {
+          showProfilePic: document.getElementById('show-profile-pic').checked,
+          showActivityStatus: document.getElementById('show-activity-status').checked,
+          showNotifications: document.getElementById('show-notifications').checked
+        },
+        table: {
+          itemsPerPage: parseInt(document.getElementById('items-per-page').value),
+          defaultSort: document.getElementById('default-sort').value,
+          visibleColumns: Array.from(document.querySelectorAll('input[name="visible-columns"]:checked'))
+            .map(checkbox => checkbox.value)
+        },
+        notifications: {
+          email: document.getElementById('email-notifications').checked,
+          alta: document.getElementById('alta-notifications').checked,
+          baja: document.getElementById('baja-notifications').checked,
+          licencia: document.getElementById('licencia-notifications').checked
+        }
+      };
+      return settings;
+    }
+  
+    // Initialize settings
+    document.addEventListener('DOMContentLoaded', () => {
+      const settings = loadSettings();
+      applySettings(settings);
+  
+      // Save settings button
+      document.getElementById('save-settings').addEventListener('click', () => {
+        const currentSettings = getCurrentSettings();
+        saveSettings(currentSettings);
+        showNotification('Configuración guardada exitosamente', 'success');
+      });
+  
+      // Reset settings button
+      document.getElementById('reset-settings').addEventListener('click', () => {
+        if (confirm('¿Está seguro de que desea restaurar la configuración por defecto?')) {
+          applySettings(defaultSettings);
+          saveSettings(defaultSettings);
+          showNotification('Configuración restaurada a valores por defecto', 'success');
+        }
+      });
+    });
   });
   
